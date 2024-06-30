@@ -1,0 +1,5 @@
+name: CannibalKitchen
+version: '1.0.0'
+main: de.megonno.cannibalkitchen.CannibalKitchen
+description: CannibalKitchen
+api-version: '1.20'
