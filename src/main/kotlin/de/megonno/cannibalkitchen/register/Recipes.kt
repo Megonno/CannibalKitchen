@@ -24,7 +24,7 @@ object Recipes {
     fun register(plugin: CannibalKitchen) {
         listOf(burgerPanRecipe, burgerPettyRecipe).forEach { recipe ->
             plugin.server.addRecipe(recipe.invoke())
-            plugin.server.updateRecipes()
         }
+        plugin.server.updateRecipes()
     }
 }
