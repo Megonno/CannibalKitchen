@@ -14,8 +14,15 @@ object Recipes {
         }
     }
 
+    val burgerPettyRecipe = {
+        ShapelessRecipe(NamespacedKey(CannibalKitchen.ID, "burger_petty_recipe"), Items.burgerPetty.invoke()).apply {
+            addIngredient(ItemStack(Material.COOKED_BEEF))
+            addIngredient(ItemStack(Material.FLINT))
+        }
+    }
+
     fun register(plugin: CannibalKitchen) {
-        listOf(burgerPanRecipe).forEach { recipe ->
+        listOf(burgerPanRecipe, burgerPettyRecipe).forEach { recipe ->
             plugin.server.addRecipe(recipe.invoke())
             plugin.server.updateRecipes()
         }
