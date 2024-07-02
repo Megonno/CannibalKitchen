@@ -4,6 +4,7 @@ import de.megonno.cannibalkitchen.CannibalKitchen
 import org.bukkit.Material
 import org.bukkit.NamespacedKey
 import org.bukkit.inventory.ItemStack
+import org.bukkit.inventory.ShapedRecipe
 import org.bukkit.inventory.ShapelessRecipe
 
 object Recipes {
@@ -21,8 +22,16 @@ object Recipes {
         }
     }
 
+    val burgerRecipe = {
+        ShapedRecipe(NamespacedKey(CannibalKitchen.ID, "burger_recipe"), Items.burger.invoke()).apply {
+            shape("b", "f", "b")
+            setIngredient('b', Items.burgerPan.invoke())
+            setIngredient('f', Items.burgerPetty.invoke())
+        }
+    }
+
     fun register(plugin: CannibalKitchen) {
-        listOf(burgerPanRecipe, burgerPettyRecipe).forEach { recipe ->
+        listOf(burgerPanRecipe, burgerPettyRecipe, burgerRecipe).forEach { recipe ->
             plugin.server.addRecipe(recipe.invoke())
         }
         plugin.server.updateRecipes()

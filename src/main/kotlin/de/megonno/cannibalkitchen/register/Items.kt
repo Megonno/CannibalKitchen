@@ -20,6 +20,17 @@ object Items {
             itemMeta = itemMeta.apply {
                 displayName(Component.text("Burger Petty").decoration(TextDecoration.ITALIC, false))
                 itemName(Component.text("burger_petty"))
+                setCustomModelData(1)
+            }
+        }
+    }
+
+    val burger = {
+        ItemStack(Material.BREAD).apply {
+            itemMeta = itemMeta.apply {
+                displayName(Component.text("Burger").decoration(TextDecoration.ITALIC, false))
+                itemName(Component.text("burger"))
+                setCustomModelData(1)
             }
         }
     }
