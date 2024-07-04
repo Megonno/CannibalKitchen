@@ -8,7 +8,7 @@ import org.bukkit.plugin.java.JavaPlugin
 
 class CannibalKitchen : JavaPlugin() {
     companion object {
-        const val ID = "cannibalkitchen"
+        const val ID = "cannibal_kitchen"
     }
 
     val gameManager by lazy { GameManager(plugin = this, world = server.getWorld("world")!!) }
