@@ -17,7 +17,7 @@ class CannibalKitchen : JavaPlugin() {
         Translation().register()
         Recipes.register(this)
         registerCommands()
-        gameManager.registerEventHandlers(plugin = this)
+        gameManager.registerEventHandlers()
     }
 
     @Suppress("UnstableApiUsage")

@@ -38,7 +38,7 @@ class GameManager(private val plugin: CannibalKitchen, val world: World) {
 
     fun stopGame(): Boolean = gameStateHandler.tryToChangeGameState(GameState.Stopping)
 
-    fun registerEventHandlers(plugin: CannibalKitchen) {
+    fun registerEventHandlers() {
         listOf(
             General(),
             OnResetting(plugin = plugin),
