@@ -8,10 +8,10 @@ import java.util.Locale
 import java.util.ResourceBundle
 
 class Translation {
-    val registry = TranslationRegistry.create(Key.key("cannibal_kitchen:translations"))
+    private val registry = TranslationRegistry.create(Key.key("cannibal_kitchen:translations"))
 
-    val enBundle = ResourceBundle.getBundle("translations.Bundle", Locale.US, UTF8ResourceBundleControl.get())
-    val deBundle = ResourceBundle.getBundle("translations.Bundle", Locale.GERMANY, UTF8ResourceBundleControl.get())
+    private val enBundle = ResourceBundle.getBundle("translations.Bundle", Locale.US, UTF8ResourceBundleControl.get())
+    private val deBundle = ResourceBundle.getBundle("translations.Bundle", Locale.GERMANY, UTF8ResourceBundleControl.get())
 
     fun register() {
         registry.registerAll(Locale.US, enBundle, true)
