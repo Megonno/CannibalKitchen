@@ -60,7 +60,7 @@ object Items {
     }
 
     val upgrader = {
-        ItemStack(Material.SHULKER_BOX).apply {
+        ItemStack(Material.NETHERITE_UPGRADE_SMITHING_TEMPLATE).apply {
             handler("upgrader")
             itemMeta = itemMeta.apply {
                 itemName(Component.text("upgrader"))
