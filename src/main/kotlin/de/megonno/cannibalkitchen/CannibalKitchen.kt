@@ -8,6 +8,7 @@ import de.megonno.cannibalkitchen.item.MItemStackListener
 import de.megonno.cannibalkitchen.register.Inventories
 import de.megonno.cannibalkitchen.register.ItemFunctions
 import de.megonno.cannibalkitchen.register.Recipes
+import de.megonno.cannibalkitchen.register.Scoreboards
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents
 import org.bukkit.plugin.java.JavaPlugin
 
@@ -23,6 +24,7 @@ class CannibalKitchen : JavaPlugin() {
         registerMApiListener()
         Inventories.register(plugin = this)
         ItemFunctions.register(plugin = this)
+        Scoreboards.register(plugin = this)
         Translation().register()
         Recipes.register(this)
         registerCommands()
