@@ -11,6 +11,7 @@ import de.megonno.cannibalkitchen.game.state.GameStateHandler
 import de.megonno.cannibalkitchen.game.team.GameTeam
 import de.megonno.cannibalkitchen.game.team.TeamHandler
 import de.megonno.cannibalkitchen.game.upgrades.UpgradeHandler
+import de.megonno.cannibalkitchen.utils.ActionBarTimer
 import net.kyori.adventure.text.Component
 import org.bukkit.Location
 import org.bukkit.World
@@ -37,6 +38,7 @@ class GameManager(private val plugin: CannibalKitchen, val world: World) {
     val orderHandler = OrderHandler()
     val coinHandler = CoinHandler()
     val upgradeHandler = UpgradeHandler(plugin = plugin)
+    val timer = ActionBarTimer(plugin = plugin) { plugin.server.onlinePlayers.toMutableList() }
 
     fun registerEventHandlers() {
         listOf(

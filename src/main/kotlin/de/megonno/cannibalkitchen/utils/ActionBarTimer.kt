@@ -5,22 +5,25 @@ import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 import net.kyori.adventure.text.format.TextDecoration
 import org.bukkit.entity.Player
-import org.bukkit.scheduler.BukkitTask
 import kotlin.math.abs
 
-class ActionBarTimer(private val plugin: CannibalKitchen, private val players: List<Player>) {
+class ActionBarTimer(private val plugin: CannibalKitchen, private val players: () -> MutableList<Player>) {
     private var time = 0
-    private var task: BukkitTask? = null
+    private var paused = true
 
-    fun startTimer() {
-        task = plugin.server.scheduler.runTaskTimer(plugin, Runnable {
+    init {
+        plugin.server.scheduler.runTaskTimer(plugin, Runnable {
             updateTimer()
-            time++
+            if (!paused) time++
         }, 0L, 20L)
     }
 
+    fun startTimer() {
+        paused = false
+    }
+
     fun pauseTimer() {
-        task?.cancel()
+        paused = true
     }
 
     private fun updateTimer() {
@@ -33,8 +36,12 @@ class ActionBarTimer(private val plugin: CannibalKitchen, private val players: L
         if (minutes != 0 || hours != 0) content += "${minutes}m "
         if (time != 0) content += "${seconds}s"
 
-        players.forEach { player ->
-            if (content.isNotEmpty()) {
+        players().forEach { player ->
+            if (paused) {
+                player.sendActionBar(
+                    Component.text("-paused-").decorate(TextDecoration.BOLD).color(NamedTextColor.LIGHT_PURPLE)
+                )
+            } else if (content.isNotEmpty()) {
                 player.sendActionBar(
                     Component.text(content).decorate(TextDecoration.BOLD).color(NamedTextColor.LIGHT_PURPLE)
                 )

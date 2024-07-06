@@ -14,6 +14,7 @@ class OnRunning(private val plugin: CannibalKitchen) : Listener {
         if (event.newGameState != GameState.Running) return
 
         plugin.server.onlinePlayers.forEach { player -> player.sendMessage("started running game state") }
+        plugin.gameManager.timer.startTimer()
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
