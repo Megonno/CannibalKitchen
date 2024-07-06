@@ -6,17 +6,18 @@ import de.megonno.cannibalkitchen.game.listeners.OnResetting
 import de.megonno.cannibalkitchen.game.listeners.OnRunning
 import de.megonno.cannibalkitchen.game.listeners.OnStarting
 import de.megonno.cannibalkitchen.game.listeners.OnStopping
-import de.megonno.cannibalkitchen.game.state.GameState
+import de.megonno.cannibalkitchen.game.order.OrderHandler
 import de.megonno.cannibalkitchen.game.state.GameStateHandler
 import de.megonno.cannibalkitchen.game.team.GameTeam
 import de.megonno.cannibalkitchen.game.team.TeamHandler
+import de.megonno.cannibalkitchen.game.upgrades.UpgradeHandler
 import net.kyori.adventure.text.Component
 import org.bukkit.Location
 import org.bukkit.World
 
 class GameManager(private val plugin: CannibalKitchen, val world: World) {
-    private val gameStateHandler = GameStateHandler(plugin = plugin)
-    private val teamHandler = TeamHandler(
+    val gameStateHandler = GameStateHandler(plugin = plugin)
+    val teamHandler = TeamHandler(
         teamList = listOf(
             GameTeam(
                 name = Component.text("Team 1"),
@@ -33,10 +34,9 @@ class GameManager(private val plugin: CannibalKitchen, val world: World) {
             )
         )
     )
-
-    fun startGame(): Boolean = gameStateHandler.tryToChangeGameState(GameState.Starting)
-
-    fun stopGame(): Boolean = gameStateHandler.tryToChangeGameState(GameState.Stopping)
+    val orderHandler = OrderHandler()
+    val coinHandler = CoinHandler()
+    val upgradeHandler = UpgradeHandler(plugin = plugin)
 
     fun registerEventHandlers() {
         listOf(

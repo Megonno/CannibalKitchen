@@ -16,6 +16,7 @@ class OnStarting(private val plugin: CannibalKitchen) : Listener {
             plugin.server.onlinePlayers.forEach { player ->
                 player.inventory.addItem(Items.upgrader())
 
+                            plugin.gameManager.gameStateHandler.tryToChangeGameState(GameState.Running)
             }
         })
     }
