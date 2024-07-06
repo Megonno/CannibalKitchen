@@ -5,6 +5,8 @@ import de.megonno.cannibalkitchen.game.GameManager
 import de.megonno.cannibalkitchen.inventory.MInventoryListener
 import de.megonno.cannibalkitchen.item.MItemStackFunctionHandler
 import de.megonno.cannibalkitchen.item.MItemStackListener
+import de.megonno.cannibalkitchen.register.Inventories
+import de.megonno.cannibalkitchen.register.ItemFunctions
 import de.megonno.cannibalkitchen.register.Recipes
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents
 import org.bukkit.plugin.java.JavaPlugin
@@ -19,6 +21,8 @@ class CannibalKitchen : JavaPlugin() {
 
     override fun onEnable() {
         registerMApiListener()
+        Inventories.register(plugin = this)
+        ItemFunctions.register(plugin = this)
         Translation().register()
         Recipes.register(this)
         registerCommands()

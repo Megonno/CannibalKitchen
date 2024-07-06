@@ -1,6 +1,10 @@
 package de.megonno.cannibalkitchen.register
 
+import de.megonno.cannibalkitchen.item.addEnchantmentEffect
+import de.megonno.cannibalkitchen.item.handler
+import de.megonno.cannibalkitchen.item.tags
 import net.kyori.adventure.text.Component
+import net.kyori.adventure.text.format.NamedTextColor
 import net.kyori.adventure.text.format.TextDecoration
 import org.bukkit.Material
 import org.bukkit.inventory.ItemStack
@@ -31,6 +35,68 @@ object Items {
                 displayName(Component.text("Burger").decoration(TextDecoration.ITALIC, false))
                 itemName(Component.text("burger"))
                 setCustomModelData(1)
+            }
+        }
+    }
+
+    val upgrader = {
+        ItemStack(Material.SHULKER_BOX).apply {
+            handler("upgrader")
+            itemMeta = itemMeta.apply {
+                itemName(Component.text("upgrader"))
+                displayName(
+                    Component.text("Upgrader").color(NamedTextColor.AQUA)
+                        .decoration(TextDecoration.ITALIC, false)
+                        .decoration(TextDecoration.BOLD, true)
+                )
+            }
+        }
+    }
+
+    val speedUpgrade = { bought: Boolean ->
+        ItemStack(Material.FEATHER).apply {
+            handler("speed_upgrade")
+            itemMeta = itemMeta.apply {
+                itemName(Component.text("speed_upgrade"))
+
+                if (bought) {
+                    displayName(
+                        Component.text("Speed Upgrade (bought)").color(NamedTextColor.RED)
+                            .decoration(TextDecoration.ITALIC, false)
+                    )
+                    addEnchantmentEffect()
+                    tags(mutableMapOf("bought" to "true"))
+                } else {
+                    displayName(
+                        Component.text("Speed Upgrade (click to buy)").color(NamedTextColor.GREEN)
+                            .decoration(TextDecoration.ITALIC, false)
+                    )
+                    tags(mutableMapOf("bought" to "false"))
+                }
+            }
+        }
+    }
+
+    val moreHotbarSlots = { bought: Boolean ->
+        ItemStack(Material.CHEST).apply {
+            handler("more_hotbar_slots")
+            itemMeta = itemMeta.apply {
+                itemName(Component.text("more_hotbar_slots"))
+
+                if (bought) {
+                    displayName(
+                        Component.text("More Hotbar Slots (bought)").color(NamedTextColor.RED)
+                            .decoration(TextDecoration.ITALIC, false)
+                    )
+                    addEnchantmentEffect()
+                    tags(mutableMapOf("bought" to "true"))
+                } else {
+                    displayName(
+                        Component.text("More Hotbar Slots (click to buy)").color(NamedTextColor.GREEN)
+                            .decoration(TextDecoration.ITALIC, false)
+                    )
+                    tags(mutableMapOf("bought" to "false"))
+                }
             }
         }
     }

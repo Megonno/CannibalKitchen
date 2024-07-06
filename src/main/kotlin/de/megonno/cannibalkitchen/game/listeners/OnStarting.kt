@@ -12,6 +12,11 @@ class OnStarting(private val plugin: CannibalKitchen) : Listener {
     fun onChangeGameState(event: GameStateChangeEvent) {
         if (event.newGameState != GameState.Starting) return
 
+        plugin.server.scheduler.runTask(plugin, Runnable {
+            plugin.server.onlinePlayers.forEach { player ->
+                player.inventory.addItem(Items.upgrader())
 
+            }
+        })
     }
 }
