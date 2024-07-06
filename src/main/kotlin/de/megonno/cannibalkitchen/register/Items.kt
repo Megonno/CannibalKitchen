@@ -39,6 +39,26 @@ object Items {
         }
     }
 
+    val void = {
+        ItemStack(Material.LIGHT_GRAY_STAINED_GLASS_PANE).apply {
+            handler("void")
+            itemMeta = itemMeta.apply {
+                displayName(Component.empty())
+                itemName(Component.text("void"))
+            }
+        }
+    }
+
+    val locked = {
+        ItemStack(Material.BARRIER).apply {
+            handler("void")
+            itemMeta = itemMeta.apply {
+                displayName(Component.empty())
+                itemName(Component.text("locked"))
+            }
+        }
+    }
+
     val upgrader = {
         ItemStack(Material.SHULKER_BOX).apply {
             handler("upgrader")

@@ -2,6 +2,7 @@ package de.megonno.cannibalkitchen.register
 
 import de.megonno.cannibalkitchen.CannibalKitchen
 import de.megonno.cannibalkitchen.game.upgrades.Upgrades
+import de.megonno.cannibalkitchen.item.MItemStackFunctionHandler
 import de.megonno.cannibalkitchen.item.allBlockedMItemStackFunctionHandler
 import de.megonno.cannibalkitchen.item.tags
 import org.bukkit.entity.Player
@@ -11,14 +12,14 @@ object ItemFunctions {
 
     private val void = allBlockedMItemStackFunctionHandler()
 
-    private val upgrader = allBlockedMItemStackFunctionHandler().apply {
+    private val upgrader = MItemStackFunctionHandler(
         interactHandler = { event ->
             Inventories.upgradeInventory().open(event.player)
 
             true
-        }
-        inventoryClickHandler = { _ -> false }
-    }
+        },
+        dropHandler = { true }
+    )
 
     private val speedUpgrade = allBlockedMItemStackFunctionHandler().apply {
         inventoryClickHandler = { event ->

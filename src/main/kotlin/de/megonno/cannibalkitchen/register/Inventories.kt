@@ -4,10 +4,7 @@ import de.megonno.cannibalkitchen.CannibalKitchen
 import de.megonno.cannibalkitchen.game.upgrades.Upgrades
 import de.megonno.cannibalkitchen.inventory.MInventoryFunctionHandler
 import de.megonno.cannibalkitchen.inventory.inventories.MChestInventory
-import de.megonno.cannibalkitchen.item.handler
 import net.kyori.adventure.text.Component
-import org.bukkit.Material
-import org.bukkit.inventory.ItemStack
 
 object Inventories {
     private lateinit var plugin: CannibalKitchen
@@ -29,7 +26,7 @@ object Inventories {
                 }
             )
         ).apply {
-            fill(ItemStack(Material.LIGHT_GRAY_STAINED_GLASS_PANE).apply { handler("void") })
+            fill(Items.void())
         }
     }
 

@@ -19,7 +19,13 @@ class OnStarting(private val plugin: CannibalKitchen) : Listener {
 
         plugin.server.scheduler.runTask(plugin, Runnable {
             plugin.server.onlinePlayers.forEach { player ->
-                player.inventory.addItem(Items.upgrader())
+                for (i in (0..2) + (6..8)) {
+                    player.inventory.setItem(i, Items.locked())
+                }
+                for (i in 9..35) {
+                    player.inventory.setItem(i, Items.void())
+                }
+                player.inventory.setItem(4, Items.upgrader())
 
                 CountDown(plugin = plugin, players = plugin.server.onlinePlayers.toList(), 60) { time, players ->
                 Scoreboards.gameScoreboard(player)
