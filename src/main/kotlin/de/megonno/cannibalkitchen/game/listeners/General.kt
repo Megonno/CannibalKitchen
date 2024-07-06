@@ -8,6 +8,9 @@ import org.bukkit.event.Listener
 class General : Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     fun onChangeGameState(event: GameStateChangeEvent) {
-        if (event.newGameState == event.oldGameState) return
+        if (event.newGameState == event.oldGameState) {
+            event.isCancelled = true
+            return
+        }
     }
 }

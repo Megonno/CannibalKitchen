@@ -13,7 +13,7 @@ import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
 
 class OnStarting(private val plugin: CannibalKitchen) : Listener {
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.HIGH)
     fun onChangeGameState(event: GameStateChangeEvent) {
         if (event.newGameState != GameState.Starting) return
 

@@ -22,11 +22,13 @@ class CannibalKitchen : JavaPlugin() {
 
     override fun onEnable() {
         registerMApiListener()
+
         Inventories.register(plugin = this)
         ItemFunctions.register(plugin = this)
+        Recipes.register(plugin = this)
         Scoreboards.register(plugin = this)
+
         Translation().register()
-        Recipes.register(this)
         registerCommands()
         gameManager.registerEventHandlers()
     }

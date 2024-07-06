@@ -9,7 +9,7 @@ import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerItemHeldEvent
 
 class OnRunning(private val plugin: CannibalKitchen) : Listener {
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.HIGH)
     fun onChangeGameState(event: GameStateChangeEvent) {
         if (event.newGameState != GameState.Running) return
 

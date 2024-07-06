@@ -3,15 +3,17 @@ package de.megonno.cannibalkitchen.game.state
 import de.megonno.cannibalkitchen.CannibalKitchen
 
 class GameStateHandler(private val plugin: CannibalKitchen) {
-    private var gameState: GameState = GameState.Unset
+    private var _gameState: GameState = GameState.Unset
+    val gameState: GameState
+        get() = _gameState
 
     fun tryToChangeGameState(newGameState: GameState): Boolean {
-        val event = GameStateChangeEvent(oldGameState = gameState, newGameState = newGameState)
+        val event = GameStateChangeEvent(oldGameState = _gameState, newGameState = newGameState)
 
         plugin.server.pluginManager.callEvent(event)
 
         return if (!event.isCancelled) {
-            gameState = newGameState
+            _gameState = newGameState
             true
         } else false
     }

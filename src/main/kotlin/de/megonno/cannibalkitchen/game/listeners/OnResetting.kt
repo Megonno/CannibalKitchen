@@ -8,9 +8,8 @@ import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
 
 class OnResetting(private val plugin: CannibalKitchen) : Listener {
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.HIGH)
     fun onChangeGameState(event: GameStateChangeEvent) {
         if (event.newGameState != GameState.Resetting) return
-        if (event.newGameState == event.oldGameState) return
     }
 }
