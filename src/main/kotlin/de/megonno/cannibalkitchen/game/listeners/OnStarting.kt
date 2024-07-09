@@ -28,29 +28,25 @@ class OnStarting(private val plugin: CannibalKitchen) : Listener {
                 player.inventory.setItem(4, Items.upgrader())
 
                 Scoreboards.gameScoreboard(player)
+            }
 
-                CountDown(plugin = plugin, players = plugin.server.onlinePlayers.toList(), 30) { time, players ->
-                    when {
-                        time % 10 == 0 && time > 0 -> {
-                            players.forEach { player -> player.sendMessage(Component.text("Start in ${time}s")) }
-                        }
+            CountDown(plugin = plugin, players = plugin.server.onlinePlayers.toList(), 30) { time, players ->
+                when {
+                    time % 10 == 0 && time > 0 -> {
+                        players.forEach { player -> player.sendMessage(Component.text("Start in ${time}s")) }
+                    }
 
-                        time in 1..10 -> {
-                            players.forEach { player ->
-                                player.sendTitlePart(
-                                    TitlePart.TITLE, Component.text("Start in ${time}s")
-                                )
-                            }
+                    time in 1..10 -> {
+                        players.forEach { player ->
+                            player.sendTitlePart(TitlePart.TITLE, Component.text("Start in ${time}s"))
                         }
+                    }
 
-                        time == 0 -> {
-                            players.forEach { player ->
-                                player.sendTitlePart(
-                                    TitlePart.TITLE, Component.text("Start in 0s")
-                                )
-                            }
-                            plugin.gameManager.gameStateHandler.tryToChangeGameState(GameState.Running)
+                    time == 0 -> {
+                        players.forEach { player ->
+                            player.sendTitlePart(TitlePart.TITLE, Component.text("Start in 0s"))
                         }
+                        plugin.gameManager.gameStateHandler.tryToChangeGameState(GameState.Running)
                     }
                 }
             }
