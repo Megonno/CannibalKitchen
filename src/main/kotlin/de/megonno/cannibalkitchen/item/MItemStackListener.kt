@@ -7,68 +7,44 @@ import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.player.PlayerDropItemEvent
 import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.event.player.PlayerSwapHandItemsEvent
-import org.bukkit.persistence.PersistentDataType
 
 // ToDo: Clean up this mess
 
-class MItemStackListener(private val mItemStackFunctionHandlers: MutableMap<String, MItemStackFunctionHandler>) : Listener {
-    @Suppress("UNUSED")
+@Suppress("UNUSED")
+class MItemStackListener(private val mItemHandlers: MutableMap<String, MItemHandler>) : Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     fun onInteract(event: PlayerInteractEvent) {
-        if (event.item?.itemMeta?.persistentDataContainer?.has(MItemStack.itemHandlerKey) != true) return
+        if (event.item?.itemMeta?.persistentDataContainer?.has(MItemHandler.itemHandlerKey) != true) return
 
-        val mItemStackFunctionHandler = mItemStackFunctionHandlers[
-            event.item!!.itemMeta.persistentDataContainer.get(
-                MItemStack.itemHandlerKey,
-                PersistentDataType.STRING
-            )
-        ] ?: return
+        val mItemStackFunctionHandler = mItemHandlers[event.item!!.handler] ?: return
 
-        event.isCancelled = mItemStackFunctionHandler.interactHandler?.invoke(event) ?: false
+        event.isCancelled = mItemStackFunctionHandler.interactHandler(event)
     }
 
-    @Suppress("UNUSED")
     @EventHandler(priority = EventPriority.HIGHEST)
     fun onPlayerDrop(event: PlayerDropItemEvent) {
-        if (!event.itemDrop.itemStack.itemMeta.persistentDataContainer.has(MItemStack.itemHandlerKey)) return
+        if (!event.itemDrop.itemStack.itemMeta.persistentDataContainer.has(MItemHandler.itemHandlerKey)) return
 
-        val mItemStackFunctionHandler = mItemStackFunctionHandlers[
-            event.itemDrop.itemStack.itemMeta.persistentDataContainer.get(
-                MItemStack.itemHandlerKey,
-                PersistentDataType.STRING
-            )
-        ] ?: return
+        val mItemStackFunctionHandler = mItemHandlers[event.itemDrop.itemStack.handler] ?: return
 
-        event.isCancelled = mItemStackFunctionHandler.dropHandler?.invoke(event) ?: false
+        event.isCancelled = mItemStackFunctionHandler.dropHandler(event)
     }
 
-    @Suppress("UNUSED")
     @EventHandler(priority = EventPriority.HIGHEST)
     fun onSwapHand(event: PlayerSwapHandItemsEvent) {
-        if (event.offHandItem.itemMeta?.persistentDataContainer?.has(MItemStack.itemHandlerKey) != true) return
+        if (event.offHandItem.itemMeta?.persistentDataContainer?.has(MItemHandler.itemHandlerKey) != true) return
 
-        val mItemStackFunctionHandler = mItemStackFunctionHandlers[
-            event.offHandItem.itemMeta.persistentDataContainer.get(
-                MItemStack.itemHandlerKey,
-                PersistentDataType.STRING
-            )
-        ] ?: return
+        val mItemStackFunctionHandler = mItemHandlers[event.offHandItem.handler] ?: return
 
-        event.isCancelled = mItemStackFunctionHandler.swapHandHandler?.invoke(event) ?: false
+        event.isCancelled = mItemStackFunctionHandler.swapHandHandler(event)
     }
 
-    @Suppress("UNUSED")
     @EventHandler(priority = EventPriority.HIGHEST)
     fun onInventoryClick(event: InventoryClickEvent) {
-        if (event.currentItem?.itemMeta?.persistentDataContainer?.has(MItemStack.itemHandlerKey) != true) return
+        if (event.currentItem?.itemMeta?.persistentDataContainer?.has(MItemHandler.itemHandlerKey) != true) return
 
-        val mItemStackFunctionHandler = mItemStackFunctionHandlers[
-            event.currentItem!!.itemMeta.persistentDataContainer.get(
-                MItemStack.itemHandlerKey,
-                PersistentDataType.STRING
-            )
-        ] ?: return
+        val mItemStackFunctionHandler = mItemHandlers[event.currentItem!!.handler] ?: return
 
-        event.isCancelled = mItemStackFunctionHandler.inventoryClickHandler?.invoke(event) ?: false
+        event.isCancelled = mItemStackFunctionHandler.inventoryClickHandler(event)
     }
 }

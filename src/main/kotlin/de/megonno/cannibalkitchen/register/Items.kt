@@ -2,7 +2,7 @@ package de.megonno.cannibalkitchen.register
 
 import de.megonno.cannibalkitchen.item.addEnchantmentEffect
 import de.megonno.cannibalkitchen.item.handler
-import de.megonno.cannibalkitchen.item.tags
+import de.megonno.cannibalkitchen.item.setTag
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 import net.kyori.adventure.text.format.TextDecoration
@@ -41,7 +41,7 @@ object Items {
 
     val void = {
         ItemStack(Material.LIGHT_GRAY_STAINED_GLASS_PANE).apply {
-            handler("void")
+            handler = "void"
             itemMeta = itemMeta.apply {
                 displayName(Component.empty())
                 itemName(Component.text("void"))
@@ -51,7 +51,7 @@ object Items {
 
     val locked = {
         ItemStack(Material.BARRIER).apply {
-            handler("void")
+            handler = "void"
             itemMeta = itemMeta.apply {
                 displayName(Component.empty())
                 itemName(Component.text("locked"))
@@ -61,12 +61,11 @@ object Items {
 
     val upgrader = {
         ItemStack(Material.NETHERITE_UPGRADE_SMITHING_TEMPLATE).apply {
-            handler("upgrader")
+            handler = "upgrader"
             itemMeta = itemMeta.apply {
                 itemName(Component.text("upgrader"))
                 displayName(
-                    Component.text("Upgrader").color(NamedTextColor.AQUA)
-                        .decoration(TextDecoration.ITALIC, false)
+                    Component.text("Upgrader").color(NamedTextColor.AQUA).decoration(TextDecoration.ITALIC, false)
                         .decoration(TextDecoration.BOLD, true)
                 )
             }
@@ -75,31 +74,34 @@ object Items {
 
     val speedUpgrade = { bought: Boolean ->
         ItemStack(Material.FEATHER).apply {
-            handler("speed_upgrade")
+            handler = "speed_upgrade"
             itemMeta = itemMeta.apply {
                 itemName(Component.text("speed_upgrade"))
-
                 if (bought) {
                     displayName(
                         Component.text("Speed Upgrade (bought)").color(NamedTextColor.RED)
                             .decoration(TextDecoration.ITALIC, false)
                     )
-                    addEnchantmentEffect()
-                    tags(mutableMapOf("bought" to "true"))
                 } else {
                     displayName(
                         Component.text("Speed Upgrade (click to buy)").color(NamedTextColor.GREEN)
                             .decoration(TextDecoration.ITALIC, false)
                     )
-                    tags(mutableMapOf("bought" to "false"))
                 }
+            }
+
+            if (bought) {
+                addEnchantmentEffect()
+                setTag(ItemTags.boughtTag, true)
+            } else {
+                setTag(ItemTags.boughtTag, false)
             }
         }
     }
 
     val moreHotbarSlots = { bought: Boolean ->
         ItemStack(Material.CHEST).apply {
-            handler("more_hotbar_slots")
+            handler = "more_hotbar_slots"
             itemMeta = itemMeta.apply {
                 itemName(Component.text("more_hotbar_slots"))
 
@@ -108,15 +110,19 @@ object Items {
                         Component.text("More Hotbar Slots (bought)").color(NamedTextColor.RED)
                             .decoration(TextDecoration.ITALIC, false)
                     )
-                    addEnchantmentEffect()
-                    tags(mutableMapOf("bought" to "true"))
                 } else {
                     displayName(
                         Component.text("More Hotbar Slots (click to buy)").color(NamedTextColor.GREEN)
                             .decoration(TextDecoration.ITALIC, false)
                     )
-                    tags(mutableMapOf("bought" to "false"))
                 }
+            }
+
+            if (bought) {
+                addEnchantmentEffect()
+                setTag(ItemTags.boughtTag, true)
+            } else {
+                setTag(ItemTags.boughtTag, false)
             }
         }
     }
