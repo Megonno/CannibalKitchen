@@ -4,7 +4,7 @@ import de.megonno.cannibalkitchen.CannibalKitchen
 import de.megonno.cannibalkitchen.game.state.GameState
 import de.megonno.cannibalkitchen.game.state.GameStateChangeEvent
 import de.megonno.cannibalkitchen.register.Items
-import de.megonno.cannibalkitchen.register.Scoreboards
+import de.megonno.cannibalkitchen.register.Displays
 import de.megonno.cannibalkitchen.utils.CountDown
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.title.TitlePart
@@ -27,7 +27,10 @@ class OnStarting(private val plugin: CannibalKitchen) : Listener {
                 }
                 player.inventory.setItem(4, Items.upgrader())
 
-                Scoreboards.gameScoreboard(player)
+                Displays.gameScoreboard(player)
+                Displays.orderBossBar(player)
+
+                plugin.gameManager.teamHandler.addPlayerToRandomTeam(player)
             }
 
             CountDown(plugin = plugin, players = plugin.server.onlinePlayers.toList(), 30) { time, players ->

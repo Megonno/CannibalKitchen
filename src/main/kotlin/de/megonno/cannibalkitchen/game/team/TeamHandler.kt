@@ -5,17 +5,9 @@ import org.bukkit.event.Listener
 import java.util.UUID
 
 class TeamHandler(teamList: List<GameTeam>, var playersPerTeam: Int = 4) : Listener {
-    private val players = mutableMapOf<UUID, UUID?>()
-    private val _teams = mutableMapOf<UUID, GameTeam>()
-    val teams: Map<UUID, GameTeam>
-        get() = _teams
-    val maxPlayers by lazy {
-        playersPerTeam * teams.size
-    }
-
-    init {
-        _teams.putAll(teamList.associateBy { UUID.randomUUID() })
-    }
+    private val players = mutableMapOf<UUID, UUID>()
+    private val teams = mutableMapOf<UUID, GameTeam>().apply { putAll(teamList.associateBy { UUID.randomUUID() }) }
+    val maxPlayers by lazy { playersPerTeam * teams.size }
 
     fun addPlayerToRandomTeam(player: Player) {
         if (players.entries.size < maxPlayers) {
@@ -31,4 +23,10 @@ class TeamHandler(teamList: List<GameTeam>, var playersPerTeam: Int = 4) : Liste
             } else false
         } else false
     }
+
+    fun getTeamIdByPlayer(player: Player): UUID? = players[player.uniqueId]
+
+    fun getTeamById(uuid: UUID): GameTeam? = teams[uuid]
+
+    fun getTeamByPlayer(player: Player): GameTeam? = getTeamIdByPlayer(player)?.let { getTeamById(it) }
 }

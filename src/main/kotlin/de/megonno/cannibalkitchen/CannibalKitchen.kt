@@ -5,10 +5,10 @@ import de.megonno.cannibalkitchen.game.GameManager
 import de.megonno.cannibalkitchen.inventory.MInventoryListener
 import de.megonno.cannibalkitchen.item.MItemHandler
 import de.megonno.cannibalkitchen.item.MItemStackListener
+import de.megonno.cannibalkitchen.register.Displays
 import de.megonno.cannibalkitchen.register.Inventories
 import de.megonno.cannibalkitchen.register.ItemHandlers
 import de.megonno.cannibalkitchen.register.Recipes
-import de.megonno.cannibalkitchen.register.Scoreboards
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents
 import org.bukkit.plugin.java.JavaPlugin
 
@@ -26,7 +26,7 @@ class CannibalKitchen : JavaPlugin() {
         Inventories.register(plugin = this)
         ItemHandlers.register(plugin = this)
         Recipes.register(plugin = this)
-        Scoreboards.register(plugin = this)
+        Displays.register(plugin = this)
 
         Translation().register()
         registerCommands()

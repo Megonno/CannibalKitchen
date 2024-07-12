@@ -8,13 +8,13 @@ import org.bukkit.scoreboard.DisplaySlot
 import org.bukkit.scoreboard.RenderType
 import org.bukkit.scoreboard.Team
 
-class MScoreboard(
+class ScoreboardWorker(
     val plugin: CannibalKitchen,
     val player: Player,
     val registeredName: String,
     updateFrequency: Long,
-    onCreate: MScoreboard.() -> Unit = {},
-    onUpdate: MScoreboard.() -> Unit = {}
+    onCreate: ScoreboardWorker.() -> Unit = {},
+    onUpdate: ScoreboardWorker.() -> Unit = {}
 ) {
     private val scoreboard = plugin.server.scoreboardManager.newScoreboard
     private val objective = scoreboard.registerNewObjective(
