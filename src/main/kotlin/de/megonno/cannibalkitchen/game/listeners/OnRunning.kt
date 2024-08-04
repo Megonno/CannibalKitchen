@@ -28,10 +28,11 @@ class OnRunning(private val plugin: CannibalKitchen) : Listener {
         gameManager.timer.startTimer()
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.HIGH)
     fun onPlayerChangeItemInHand(event: PlayerItemHeldEvent) {
-        if (plugin.gameManager.gameStateHandler.gameState != GameState.Running) return
-
+        if (!gameManager.gameStateHandler.isGameState(GameState.Starting, GameState.Running, GameState.Stopping)) {
+            return
+        }
         if (!(3..5).contains(event.newSlot)) {
             event.isCancelled = true
         }

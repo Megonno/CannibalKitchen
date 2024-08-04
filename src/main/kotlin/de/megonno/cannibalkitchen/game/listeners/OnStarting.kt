@@ -20,12 +20,12 @@ class OnStarting(private val plugin: CannibalKitchen) : Listener {
         plugin.server.scheduler.runTask(plugin, Runnable {
             plugin.server.onlinePlayers.forEach { player ->
                 for (i in (0..2) + (6..8)) {
-                    player.inventory.setItem(i, Items.locked())
+                    player.inventory.setItem(i, Items.locked.invoke())
                 }
                 for (i in 9..35) {
-                    player.inventory.setItem(i, Items.void())
+                    player.inventory.setItem(i, Items.void.invoke())
                 }
-                player.inventory.setItem(4, Items.upgrader())
+                player.inventory.setItem(4, Items.upgrader.invoke())
 
                 Displays.gameScoreboard(player)
                 Displays.orderBossBar(player)

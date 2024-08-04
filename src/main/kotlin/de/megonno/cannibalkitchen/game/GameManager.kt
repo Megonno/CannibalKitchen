@@ -60,7 +60,7 @@ class GameManager(private val plugin: CannibalKitchen, val world: World) {
 
     fun registerEventHandlers() {
         listOf(
-            General(),
+            General(plugin = plugin),
             OnResetting(plugin = plugin),
             OnRunning(plugin = plugin),
             OnStarting(plugin = plugin),

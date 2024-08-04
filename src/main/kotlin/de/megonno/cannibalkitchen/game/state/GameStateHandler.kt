@@ -18,6 +18,8 @@ class GameStateHandler(private val plugin: CannibalKitchen) {
         } else false
     }
 
+    fun isGameState(vararg gameState: GameState): Boolean = gameState.contains(this.gameState)
+
     fun foreStop() {
         plugin.server.pluginManager.callEvent(ForceStopEvent())
     }
