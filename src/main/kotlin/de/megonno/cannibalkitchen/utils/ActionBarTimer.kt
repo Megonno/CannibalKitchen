@@ -7,23 +7,35 @@ import net.kyori.adventure.text.format.TextDecoration
 import org.bukkit.entity.Player
 import kotlin.math.abs
 
-class ActionBarTimer(private val plugin: CannibalKitchen, private val players: () -> MutableList<Player>) {
+class ActionBarTimer(
+    private val plugin: CannibalKitchen,
+    private var mode: ActionBarTimerMode,
+    private val players: () -> MutableList<Player>,
+) {
     private var time = 0
-    private var paused = true
+    private var state: ActionBarTimerState = ActionBarTimerState.Unset
 
     init {
         plugin.server.scheduler.runTaskTimer(plugin, Runnable {
             updateTimer()
-            if (!paused) time++
+
+            when (mode) {
+                is ActionBarTimerMode.CountDown -> time++
+                is ActionBarTimerMode.CountUp -> time--
+            }
         }, 0L, 20L)
     }
 
     fun startTimer() {
-        paused = false
+        state = ActionBarTimerState.Running
     }
 
     fun pauseTimer() {
-        paused = true
+        state = ActionBarTimerState.Paused
+    }
+
+    fun unset() {
+        state = ActionBarTimerState.Unset
     }
 
     private fun updateTimer() {
@@ -37,15 +49,36 @@ class ActionBarTimer(private val plugin: CannibalKitchen, private val players: (
         if (time != 0) content += "${seconds}s"
 
         players().forEach { player ->
-            if (paused) {
-                player.sendActionBar(
-                    Component.text("-paused-").decorate(TextDecoration.BOLD).color(NamedTextColor.LIGHT_PURPLE)
-                )
-            } else if (content.isNotEmpty()) {
-                player.sendActionBar(
-                    Component.text(content).decorate(TextDecoration.BOLD).color(NamedTextColor.LIGHT_PURPLE)
-                )
+            when (state) {
+                ActionBarTimerState.Running -> {
+                    player.sendActionBar(
+                        Component.text(content).decorate(TextDecoration.BOLD).color(NamedTextColor.LIGHT_PURPLE)
+                    )
+                }
+
+                ActionBarTimerState.Paused -> {
+                    player.sendActionBar(
+                        Component.text("paused").decorate(TextDecoration.BOLD).color(NamedTextColor.LIGHT_PURPLE)
+                    )
+                }
+
+                ActionBarTimerState.Unset -> {
+                    player.sendActionBar(
+                        Component.text("unset").decorate(TextDecoration.BOLD).color(NamedTextColor.LIGHT_PURPLE)
+                    )
+                }
             }
         }
+    }
+
+    sealed class ActionBarTimerMode {
+        data object CountDown : ActionBarTimerMode()
+        data object CountUp : ActionBarTimerMode()
+    }
+
+    sealed class ActionBarTimerState {
+        data object Running : ActionBarTimerState()
+        data object Paused : ActionBarTimerState()
+        data object Unset : ActionBarTimerState()
     }
 }

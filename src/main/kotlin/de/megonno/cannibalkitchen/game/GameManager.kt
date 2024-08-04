@@ -38,7 +38,9 @@ class GameManager(private val plugin: CannibalKitchen, val world: World) {
     val orderHandler = OrderHandler()
     val coinHandler = CoinHandler()
     val upgradeHandler = UpgradeHandler(plugin = plugin)
-    val timer = ActionBarTimer(plugin = plugin) { plugin.server.onlinePlayers.toMutableList() }
+    val timer = ActionBarTimer(plugin = plugin, mode = ActionBarTimer.ActionBarTimerMode.CountUp) {
+        plugin.server.onlinePlayers.toMutableList()
+    }
 
     fun registerEventHandlers() {
         listOf(

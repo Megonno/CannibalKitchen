@@ -13,5 +13,7 @@ class OnStopping(private val plugin: CannibalKitchen) : Listener {
         if (event.newGameState != GameState.Stopping) return
 
         plugin.gameManager.timer.pauseTimer()
+        val gameManager = plugin.gameManager
+        gameManager.timer.pauseTimer()
     }
 }
