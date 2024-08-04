@@ -11,5 +11,10 @@ class OnResetting(private val plugin: CannibalKitchen) : Listener {
     @EventHandler(priority = EventPriority.HIGH)
     fun onChangeGameState(event: GameStateChangeEvent) {
         if (event.newGameState != GameState.Resetting) return
+
+        plugin.server.onlinePlayers.forEach { player ->
+            player.inventory.clear()
+        }
+        plugin.gameManager.gameStateHandler.tryToChangeGameState(newGameState = GameState.Unset)
     }
 }

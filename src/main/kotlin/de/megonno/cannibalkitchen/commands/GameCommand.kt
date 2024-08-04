@@ -41,6 +41,21 @@ fun Commands.registerStartCommand(plugin: CannibalKitchen) {
                         Command.SINGLE_SUCCESS
                     }
             )
+            .then(
+                Commands.literal("reset")
+                    .executes { context ->
+                        if (plugin.gameManager.gameStateHandler.tryToChangeGameState(GameState.Resetting)) {
+                            context.source.sender.sendMessage(
+                                Component.text("Game is resetting").color(NamedTextColor.GREEN)
+                            )
+                        } else {
+                            context.source.sender.sendMessage(
+                                Component.text("Game could not be resetted").color(NamedTextColor.RED)
+                            )
+                        }
+                        Command.SINGLE_SUCCESS
+                    }
+            )
             .build(),
         "Start the game",
         listOf()
