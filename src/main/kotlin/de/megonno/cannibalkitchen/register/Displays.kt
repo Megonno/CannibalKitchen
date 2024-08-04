@@ -47,8 +47,6 @@ object Displays {
                     }
                 }
 
-                content = content.append(Component.text(" : ${order.coinRewardAmount} GGoins"))
-
                 bossBar.name(content)
             }
         }
