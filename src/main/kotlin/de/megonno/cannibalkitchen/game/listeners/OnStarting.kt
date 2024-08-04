@@ -49,6 +49,7 @@ class OnStarting(private val plugin: CannibalKitchen) : Listener {
                         players.forEach { player ->
                             player.sendTitlePart(TitlePart.TITLE, Component.text("Start in 0s"))
                         }
+                        plugin.gameManager.cropHandler.start()
                         plugin.gameManager.gameStateHandler.tryToChangeGameState(GameState.Running)
                     }
                 }
