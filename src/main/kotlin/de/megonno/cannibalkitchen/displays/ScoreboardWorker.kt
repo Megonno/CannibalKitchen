@@ -1,8 +1,9 @@
-package de.megonno.cannibalkitchen.utils
+package de.megonno.cannibalkitchen.displays
 
 import de.megonno.cannibalkitchen.CannibalKitchen
 import net.kyori.adventure.text.Component
 import org.bukkit.entity.Player
+import org.bukkit.scheduler.BukkitTask
 import org.bukkit.scoreboard.Criteria
 import org.bukkit.scoreboard.DisplaySlot
 import org.bukkit.scoreboard.RenderType
@@ -14,8 +15,9 @@ class ScoreboardWorker(
     val registeredName: String,
     updateFrequency: Long,
     onCreate: ScoreboardWorker.() -> Unit = {},
-    onUpdate: ScoreboardWorker.() -> Unit = {}
+    onUpdate: ScoreboardWorker.() -> Unit = {},
 ) {
+    private lateinit var task: BukkitTask
     private val scoreboard = plugin.server.scoreboardManager.newScoreboard
     private val objective = scoreboard.registerNewObjective(
         registeredName, Criteria.DUMMY, Component.text(registeredName), RenderType.INTEGER
@@ -24,12 +26,23 @@ class ScoreboardWorker(
     }
 
     init {
+        if (plugin.scoreboardWorkers[player.uniqueId] != null) {
+            throw IllegalStateException("There can not be two ScoreboardWorker for one Player!")
+        }
+
         player.scoreboard = scoreboard
         onCreate()
 
-        plugin.server.scheduler.runTaskTimerAsynchronously(plugin, Runnable {
-            onUpdate()
+        task = plugin.server.scheduler.runTaskTimerAsynchronously(plugin, Runnable {
+            if (player.isOnline) onUpdate() else task.cancel()
         }, 0L, updateFrequency * 20L)
+
+        plugin.scoreboardWorkers[player.uniqueId] = this
+    }
+
+    fun destroy() {
+        player.scoreboard = plugin.server.scoreboardManager.mainScoreboard
+        plugin.scoreboardWorkers.remove(player.uniqueId)
     }
 
     fun displayName(displayName: Component) {
@@ -59,5 +72,5 @@ class ScoreboardWorker(
     private fun team(slot: Int): Team =
         scoreboard.getTeam("$registeredName:$slot") ?: scoreboard.registerNewTeam("$registeredName:$slot")
 
-    private fun entry(slot: Int) = "\u00A7" + (('0'..'9') + ('a'..'f')).toList()[slot]
+    private fun entry(slot: Int): String = "\u00A7" + (('0'..'9') + ('a'..'f'))[slot]
 }

@@ -1,8 +1,8 @@
 package de.megonno.cannibalkitchen.register
 
 import de.megonno.cannibalkitchen.CannibalKitchen
-import de.megonno.cannibalkitchen.utils.BossBarWorker
-import de.megonno.cannibalkitchen.utils.ScoreboardWorker
+import de.megonno.cannibalkitchen.displays.BossBarWorker
+import de.megonno.cannibalkitchen.displays.ScoreboardWorker
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 import net.kyori.adventure.text.format.TextDecoration

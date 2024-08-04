@@ -13,6 +13,8 @@ class OnResetting(private val plugin: CannibalKitchen) : Listener {
         if (event.newGameState != GameState.Resetting) return
 
         plugin.server.onlinePlayers.forEach { player ->
+            plugin.scoreboardWorkers[player.uniqueId]?.destroy()
+            plugin.bossBarWorkers[player.uniqueId]?.destroy()
             player.inventory.clear()
         }
         plugin.gameManager.gameStateHandler.tryToChangeGameState(newGameState = GameState.Unset)

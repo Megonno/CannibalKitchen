@@ -3,8 +3,8 @@ package de.megonno.cannibalkitchen.game.listeners
 import de.megonno.cannibalkitchen.CannibalKitchen
 import de.megonno.cannibalkitchen.game.state.GameState
 import de.megonno.cannibalkitchen.game.state.GameStateChangeEvent
-import de.megonno.cannibalkitchen.register.Items
 import de.megonno.cannibalkitchen.register.Displays
+import de.megonno.cannibalkitchen.register.Items
 import de.megonno.cannibalkitchen.utils.CountDown
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.title.TitlePart
