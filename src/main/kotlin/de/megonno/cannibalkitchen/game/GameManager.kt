@@ -37,7 +37,7 @@ class GameManager(private val plugin: CannibalKitchen, val world: World) {
             )
         )
     )
-    val orderHandler = OrderHandler()
+    val orderHandler = OrderHandler(plugin = plugin)
     val coinHandler = CoinHandler()
     val cropHandler = CropHandler(
         plugin = plugin,

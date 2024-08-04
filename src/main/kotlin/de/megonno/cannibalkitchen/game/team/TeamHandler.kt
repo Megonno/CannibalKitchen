@@ -24,6 +24,8 @@ class TeamHandler(teamList: List<GameTeam>, var playersPerTeam: Int = 4) : Liste
         } else false
     }
 
+    fun getTeams(): Map<UUID, GameTeam> = teams
+
     fun getTeamIdByPlayer(player: Player): UUID? = players[player.uniqueId]
 
     fun getTeamById(uuid: UUID): GameTeam? = teams[uuid]
